@@ -21,5 +21,5 @@ from core.apps.users.api import api
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", api.urls),
+    path("api/auth/", api.urls, name="api-1.0.0"),
 ]
