@@ -1,18 +1,16 @@
 from ninja import NinjaAPI
 from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.tokens import RefreshToken
-from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from .schema import LoginSchema, RegisterSchema, UserOut
 
-User = get_user_model()
 
 api = NinjaAPI(
     title="Auth API",
     csrf=False,
-    
 )
 
 
@@ -140,8 +138,6 @@ def refresh(request):
             status=401,
         )
 
-
-from ninja_jwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
 @api.post("/logout", auth=JWTAuth(), tags=["auth"])
 def logout(request):
