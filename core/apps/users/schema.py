@@ -1,5 +1,7 @@
-from ninja import Schema
+# core/apps/users/schemas.py
 
+from ninja import Schema
+from django.contrib.auth.models import User
 
 class LoginSchema(Schema):
     username: str
@@ -12,6 +14,14 @@ class RegisterSchema(Schema):
     password2: str
 
 class UserOut(Schema):
+    id: int
     username: str
     email: str
-    is_active: bool
+
+    @staticmethod
+    def from_orm(user: User):
+        return UserOut(
+            id=user.id,
+            username=user.username,
+            email=user.email,
+        )

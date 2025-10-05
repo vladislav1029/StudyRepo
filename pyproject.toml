@@ -12,7 +12,9 @@ dependencies = [
     "psycopg2 (>=2.9.10,<3.0.0)",
     "django-environ (>=0.12.0,<0.13.0)",
     "django-ninja (>=1.4.3,<2.0.0)",
-    "django-extensions (>=4.1,<5.0)"
+    "django-extensions (>=4.1,<5.0)",
+    "django-ninja-jwt (>=5.3.9,<6.0.0)",
+    "django-cors-headers (>=4.9.0,<5.0.0)"
 ]
 
 

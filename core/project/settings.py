@@ -28,8 +28,7 @@ SECRET_KEY: str = env("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="localhost,127.0.0.1").split(",")
 
 # Application definition
 
@@ -40,12 +39,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django_extensions',
-    "core.apps.users"
+    "django_extensions",
+    "corsheaders",
+    "ninja",
+    "ninja_jwt",
+    "ninja_jwt.token_blacklist",
+    "core.apps.users",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -89,7 +93,27 @@ DATABASES = {
     }
 }
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # замени на свой фронт
+    "http://127.0.0.1:8000"
+]
 
+
+NINJA_JWT = {
+    "ACCESS_TOKEN_LIFETIME": 60 * 15,  # 15 минут
+    "REFRESH_TOKEN_LIFETIME": 60 * 60 * 24 * 7,  # 7 дней
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+}
+
+# Безопасность кук
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SAMESITE = "Lax"
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
