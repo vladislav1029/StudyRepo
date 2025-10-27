@@ -17,6 +17,7 @@ class UserOut(Schema):
     id: int
     username: str
     email: str
+    is_admin: bool
 
     @staticmethod
     def from_orm(user: User):
@@ -24,4 +25,5 @@ class UserOut(Schema):
             id=user.id,
             username=user.username,
             email=user.email,
+            is_admin=user.is_admin,
         )

@@ -11,6 +11,7 @@ from .schema import LoginSchema, RegisterSchema, UserOut
 api = NinjaAPI(
     title="Auth API",
     csrf=False,
+    urls_namespace="auth",
 )
 
 

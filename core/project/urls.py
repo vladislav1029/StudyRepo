@@ -17,9 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from core.apps.users.api import api
+from django.conf import settings
+from django.conf.urls.static import static
+from core.apps.users.api import api as auth_api
+from core.apps.labs.api import api as labs_api
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/auth/", api.urls, name="api-1.0.0"),
-]
+    path("api/auth/", auth_api.urls, name="auth-api"),
+    path("api/labs/", labs_api.urls, name="labs-api"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

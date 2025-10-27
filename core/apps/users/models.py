@@ -1,4 +1,8 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-# Create your models here.
-User  = get_user_model()
+
+class User(AbstractUser):
+    is_admin = models.BooleanField(default=False)
+
+    class Meta:
+        swappable = 'AUTH_USER_MODEL'
