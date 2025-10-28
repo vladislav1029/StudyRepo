@@ -11,5 +11,6 @@ class TopicAdmin(admin.ModelAdmin):
 @admin.register(LabTask)
 class LabTaskAdmin(admin.ModelAdmin):
     list_display = ('title', 'topic', 'created_at')
+    list_editable = ('topic',)
     search_fields = ('title', 'description')
     list_filter = ('topic', 'created_at')

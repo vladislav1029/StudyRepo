@@ -13,6 +13,7 @@ class LabTask(models.Model):
     description = models.TextField()
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='tasks')
     file = models.FileField(upload_to='lab_files/', blank=True, null=True)
+    solution_file = models.FileField(upload_to='solutions/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

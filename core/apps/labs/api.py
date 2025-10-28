@@ -26,6 +26,7 @@ class LabTaskSchema(Schema):
     description: str
     topic_id: int
     file_url: Optional[str]
+    solution_file_url: Optional[str]
     created_at: str
 
     @staticmethod
@@ -36,6 +37,7 @@ class LabTaskSchema(Schema):
             description=task.description,
             topic_id=task.topic.id,
             file_url=task.file.url if task.file else None,
+            solution_file_url=task.solution_file.url if task.solution_file else None,
             created_at=str(task.created_at),
         )
 
@@ -83,6 +85,21 @@ def download_file(request, task_id: int):
         )
         return response
     return api.create_response(request, {"error": "File not found"}, status=404)
+
+
+# Download solution file
+@api.get("/tasks/{task_id}/download-solution", auth=JWTAuth())
+def download_solution(request, task_id: int):
+    task = LabTask.objects.get(id=task_id)
+    if task.solution_file:
+        response = HttpResponse(
+            task.solution_file.read(), content_type="application/octet-stream"
+        )
+        response["Content-Disposition"] = (
+            f'attachment; filename="{task.solution_file.name.split("/")[-1]}"'
+        )
+        return response
+    return api.create_response(request, {"error": "Solution file not found"}, status=404)
 
 
 # Admin: create task
