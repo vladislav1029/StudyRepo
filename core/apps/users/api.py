@@ -2,11 +2,12 @@ from ninja import NinjaAPI
 from ninja_jwt.authentication import JWTAuth
 from ninja_jwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from .schema import LoginSchema, RegisterSchema, UserOut
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 api = NinjaAPI(
     title="Auth API",
